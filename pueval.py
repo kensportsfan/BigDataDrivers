@@ -1,10 +1,12 @@
+import numpy as np
+from scipy.stats import rankdata
 #evaluates a PU classifier
 
 #input reqs:
 #each group ought to be list consisting of ones and zeroes
 #a one corresponds to a labeling as the positive (outlier) class
 #a zero corresponds to a labeling of the negative (majority) class
-def evaluate(unlabeledGroup, spyGroup):
+def evaluateF(unlabeledGroup, spyGroup):
     recall = float(sum(spyGroup))/len(spyGroup)
 
     posCount = sum(unlabeledGroup) + sum(spyGroup)
@@ -20,6 +22,17 @@ def evaluate(unlabeledGroup, spyGroup):
     result["score"] = score
     return  result
 
-#it is possible that this may also work with probabilities in the data
-#I think that in this case, our metric will mimic the area under the ROC curve
-#more research req
+def evaluateAUC(unlabeledGroup, spyGroup):
+    return ranksum(spyGroup,unlabeledGroup)
+
+def ranksum(x,y):
+    x,y = map(np.asarray, (x, y))
+    n1 = len(x)
+    n2 = len(y)
+    print("n1 is", n1, "n2 is", n2)
+    alldata = np.concatenate((x,y))
+    ranked = rankdata(alldata)
+    x = ranked[:n1]
+    y = ranked[n1:]
+    s = np.sum(x,axis=0)
+    return s

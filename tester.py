@@ -4,9 +4,10 @@ import labeleval
 
 def testPUClassifier(classifier, unlabeledData, spyData, normalizer):
     unlabeledRes, spyRes= classifier(unlabeledData, spyData)
-    unlabeledRes = normalizer(unlabeledRes)
-    spyRes = normalizer(spyRes)
-    return pueval.evaluate(unlabeledRes, spyRes)
+    comb = np.append(unlabeledRes, spyRes)
+    comb = normalizer(comb)
+    n = len(unlabeledRes)
+    return pueval.evaluateAUC(comb[:n], comb[n:])
 
 def testSupervisedClassifier(classifier,unlabeledData, labels, normalizer,
                              showGraph=False,

@@ -13,7 +13,7 @@ def getBinarizeFunc(threshold):
 
 
 #make all data range from 0 to 1, scaled to the max value
-def linearScale(data):
+def linearScale(data,other=None):
     high = float(max(data))
     return np.array([item/high for item in data])
 
