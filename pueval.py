@@ -29,10 +29,10 @@ def ranksum(x,y):
     x,y = map(np.asarray, (x, y))
     n1 = len(x)
     n2 = len(y)
-    print("n1 is", n1, "n2 is", n2)
     alldata = np.concatenate((x,y))
     ranked = rankdata(alldata)
     x = ranked[:n1]
     y = ranked[n1:]
     s = np.sum(x,axis=0)
-    return s
+    maxVal = sum([x for x in xrange(n2+1, n1+n2+1)])
+    return s/maxVal

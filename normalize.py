@@ -13,7 +13,7 @@ def getBinarizeFunc(threshold):
 
 
 #make all data range from 0 to 1, scaled to the max value
-def linearScale(data,other=None):
+def linearScale(data):
     high = float(max(data))
     return np.array([item/high for item in data])
 
@@ -26,4 +26,6 @@ def getChiSquareFunc(dimension, squareInputs=True):
             data = np.array([item ** 2 for item in data])
         return np.array([special.chdtr(dimension, item) for item in data])
     return cumChiSquare
-            
+
+def doNothing(data):
+    return data

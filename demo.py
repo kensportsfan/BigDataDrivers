@@ -15,6 +15,7 @@ def demoPU(n_samples=125, n_outliers=10, n_features=2, pollution=15,
     result = tester.testPUClassifier(mahalanobis.getDistances, X, outliers, norm)
 
     print(result)
+    return result
 
 def demoSup(n_samples=125, n_outliers=10, n_features=2, pollution=15,
             norm=normalize.linearScale, data=None, showGraph=False,
@@ -31,10 +32,24 @@ def demoSup(n_samples=125, n_outliers=10, n_features=2, pollution=15,
                                              showGraph=showGraph, title=title)
 
     print(result)
+    return result
 
+def demoAUCcomp(n_samples=125, n_outliers=10, n_features=2, pollution=15,
+           norm=normalize.linearScale, data=None, showGraph=False):
+    if not data:
+        data = demoData(n_samples=n_samples, n_outliers=n_outliers,
+                                    n_features=n_features, pollution=pollution)
+    print "starting PU"
+    pu = demoPU(n_samples=n_samples, n_outliers=n_outliers, n_features=n_features,
+           pollution=pollution, norm=norm, data=data)
+    print "starting SUP"
+    sup = demoSup(n_samples=n_samples, n_outliers=n_outliers, n_features=n_features,
+           pollution=pollution, norm=norm, data=data,showGraph=showGraph)
+    return {"pu":pu,"sup":sup}
+    
 #adapted from scikit-learn example
 #http://scikit-learn.org/stable/auto_examples/covariance/plot_mahalanobis_distances.html#example-covariance-plot-mahalanobis-distances-py
-def demoData(n_samples=125, n_outliers=10, n_features=2, pollution=15):
+def demoData(n_samples=125, n_outliers=10, n_features=2, pollution=15, outlierMultiplier=7.):
     # generate data
     gen_cov = np.eye(n_features)
     gen_cov[0, 0] = 2.
@@ -42,7 +57,7 @@ def demoData(n_samples=125, n_outliers=10, n_features=2, pollution=15):
 
     #generate outliers
     outliers_cov = np.eye(n_features)
-    outliers_cov[np.arange(1, n_features), np.arange(1, n_features)] = 7.
+    outliers_cov[np.arange(1, n_features), np.arange(1, n_features)] = float(outlierMultiplier)
     outliers = np.dot(np.random.randn(n_outliers*10, n_features), outliers_cov)
 
     contaminants = []
