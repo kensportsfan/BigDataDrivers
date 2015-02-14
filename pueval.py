@@ -6,6 +6,8 @@ from scipy.stats import rankdata
 #each group ought to be list consisting of ones and zeroes
 #a one corresponds to a labeling as the positive (outlier) class
 #a zero corresponds to a labeling of the negative (majority) class
+
+#returns a dict giving spy recall, positive probability, and estimated F1-score
 def evaluateF(unlabeledGroup, spyGroup):
     recall = float(sum(spyGroup))/len(spyGroup)
 
@@ -22,6 +24,9 @@ def evaluateF(unlabeledGroup, spyGroup):
     result["score"] = score
     return  result
 
+# estimates area under receiver operator characteristic curve
+# input is scores for spy and unlabeled group
+# assumes spy has only positive class
 def evaluateAUC(unlabeledGroup, spyGroup):
     return ranksum(spyGroup,unlabeledGroup)
 

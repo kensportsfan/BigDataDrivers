@@ -1,9 +1,11 @@
 from scipy.spatial.distance import euclidean
 import numpy as np
 
+#gets duration of the drive in seconds
 def getDuration(drive):
     return float(len(drive))
 
+#gets the distance of the drive in meters
 def getDistance(drive):
     dist = 0
     for i in xrange(len(drive)-1):

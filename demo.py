@@ -4,6 +4,7 @@ import normalize
 import numpy as np
 import random
 
+#simple demo to evaluate classifier using PU eval metric (ranksum ratio)
 def demoPU(n_samples=125, n_outliers=10, n_features=2, pollution=15,
            norm=normalize.linearScale, data=None):
     if not data:
@@ -17,6 +18,8 @@ def demoPU(n_samples=125, n_outliers=10, n_features=2, pollution=15,
     print(result)
     return result
 
+# simple demo to evaluate classifier with known data
+# returns area under ROC
 def demoSup(n_samples=125, n_outliers=10, n_features=2, pollution=15,
             norm=normalize.linearScale, data=None, showGraph=False,
             title='Spring Break'):
@@ -34,6 +37,8 @@ def demoSup(n_samples=125, n_outliers=10, n_features=2, pollution=15,
     print(result)
     return result
 
+# simple demo to check performance of PU evaluation metric
+# returns a dict containing PU (ranksum ratio) score and Sup score (AUC)
 def demoAUCcomp(n_samples=125, n_outliers=10, n_features=2, pollution=15,
            norm=normalize.linearScale, data=None, showGraph=False):
     if not data:

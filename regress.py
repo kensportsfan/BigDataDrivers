@@ -2,6 +2,10 @@ import csv
 import demo
 import normalize
 
+# runs through demos to create a csv containing a data lake of test runs
+# created to evaluate ranksum test as a predictor of AUC
+# ranges should be tuples indicating start and finish values for range to test
+# repeats is how many samples for each treatment
 def genData(unlabeledRange=(200,201),outlierRange=(2,7),featureRange=(2,3),
             pollutionRange=(0,50),norm=normalize.doNothing, repeats=1,multiplierRange=(1,5),
             filename='regression.csv'):
@@ -23,9 +27,8 @@ def genData(unlabeledRange=(200,201),outlierRange=(2,7),featureRange=(2,3),
                                                  n_features=feat, pollution=pollution,
                                                  outlierMultiplier=multiplier)
                             res = demo.demoAUCcomp(data=data, norm=norm)
-                            fullData.append([res["pu"],res["sup"],unlabeled,outlier,pollution,
+                            wr.writerow([res["pu"],res["sup"],unlabeled,outlier,pollution,
                                              feat,multiplier])
-    wr.writerows(fullData)
 
     myfile.close()
                     

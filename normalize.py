@@ -27,5 +27,6 @@ def getChiSquareFunc(dimension, squareInputs=True):
         return np.array([special.chdtr(dimension, item) for item in data])
     return cumChiSquare
 
+#just returns the data. cute!
 def doNothing(data):
     return data

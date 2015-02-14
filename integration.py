@@ -2,6 +2,9 @@ import featureimport as fi
 import demo
 import normalize
 
+#simple integration test
+#computes PU scores for driver group 1,
+# using drives from driver group 2 as spy data
 def test():
     feats = ["duration","distance","avgSpeed"]
     unlabeled = fi.importGroup("drivers/1",feats)
