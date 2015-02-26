@@ -22,7 +22,7 @@ def getAllFeatures(drive):
     return {"duration":getDuration(drive),"distance":getDistance(drive), 
             "avgSpeed":getAvgSpeed(drive)}
 
-def selectFeatures(drive,feats):
+def computeFeatures(drive,feats):
     allFeats = getAllFeatures(drive)
     data = []
     for feature in feats:
