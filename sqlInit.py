@@ -1,6 +1,7 @@
 import sqlite3
 
 job = 4
+global bob
 bob = 5
 
 def getConnection():
@@ -27,8 +28,15 @@ def createTables():
                 name VARCHAR(255) NOT NULL,
                 version INTEGER NOT NULL,
                 value FLOAT NOT NULL,
-                driverId Integer NOT NULL,
+                driverId INTEGER NOT NULL,
                 FOREIGN KEY(driverId) REFERENCES drives(id))''')
+
+    c.execute('''CREATE TABLE IF NOT EXISTS args
+                (id INTEGER PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                stringValue VARCHAR(255) NOT NULL,
+                intValue INTEGER NOT NULL,
+                decValue DOUBLE NOT NULL)''')
 
     closeConnection()
 
