@@ -1,18 +1,17 @@
 import sqlite3
 
-job = 4
-global bob
-bob = 5
+connection = None
 
 def getConnection():
-    print job
-    if bob is 5:
-        bob = sqlite3.connect('featureCache.db')
-    return bob
+    global connection
+    if connection is None:
+        connection = sqlite3.connect('featureCache.db')
+    return connection
 
 def closeConnection():
-    if bob is not 5:
-        bob.close()
+    global connection
+    if connection is not None:
+        connection.close()
 
 def createTables():
     conn = getConnection()
@@ -40,4 +39,4 @@ def createTables():
 
     closeConnection()
 
-createTables()
+#createTables()
