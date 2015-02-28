@@ -12,6 +12,7 @@ def closeConnection():
     global connection
     if connection is not None:
         connection.close()
+        connection = None
 
 def createTables():
     conn = getConnection()
@@ -33,9 +34,19 @@ def createTables():
     c.execute('''CREATE TABLE IF NOT EXISTS args
                 (id INTEGER PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
-                stringValue VARCHAR(255) NOT NULL,
-                intValue INTEGER NOT NULL,
-                decValue DOUBLE NOT NULL)''')
+                featureId INTEGER NOT NULL,
+                stringValue VARCHAR(255),
+                intValue INTEGER,
+                floatValue DOUBLE,
+                FOREIGN KEY(featureId) REFERENCES features(id))''')
+    conn.commit()
+
+def refreshTable(name):
+    stmt = "DROP TABLE ?"
+    conn = getConnection()
+    c = conn.cursor()
+    c.execute(stmt, (name,))
+    createTables()
 
     closeConnection()
 
