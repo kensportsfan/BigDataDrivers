@@ -2,11 +2,12 @@ from scipy.spatial.distance import euclidean
 import numpy as np
 
 #gets duration of the drive in seconds
-def getDuration(drive):
+def getDuration(drive, argDict=None):
     return float(len(drive))
 
 #gets the distance of the drive in meters
-def getDistance(drive):
+def getDistance(drive, argDict=None):
+    #print argDict
     dist = 0
     for i in xrange(len(drive)-1):
         dist += euclidean(drive[i],drive[i+1])
@@ -14,7 +15,7 @@ def getDistance(drive):
     #return float(reduce(lambda x, y : (x[0] + euclidean(x[0],y), y), drive, (0,[0,0]))[0])
 
 #OPTIMIZE ME
-def getAvgSpeed(drive):
+def getAvgSpeed(drive, argDict=None):
     dur = getDuration(drive)
     return 0 if dur <= 0 else getDistance(drive)/dur
 

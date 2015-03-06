@@ -30,7 +30,7 @@ def addFeature(name, version, value, folderNum, fileNum, args):
     stmt = '''INSERT INTO args (name, featureId, stringValue, intValue, floatValue)
                 VALUES (?, ?, ?, ?, ?)'''
     for name, value, dType in args:
-        print "sjhdf"
+        #print "sjhdf"
         vals = [name, featureId, None, None, None]
         vals[dType+2] = value
         c.execute(stmt, vals)
@@ -45,16 +45,17 @@ def getCachedFeatures(folderNum, fileNum):
                 drives.id = f.driverId AND
                 folder = ? AND
                 file = ?
-                JOIN args AS a ON
+                LEFT JOIN args AS a ON
                 f.id = a.featureId'''
     c.execute(stmt, (folderNum, fileNum))
     args = c.fetchall()
     features = {}
-    for fId, fName, fVersion, fValue, aName, strValue, intValue, floatValue in args:
+    for fId, fName, fVersion, fValue, aName, strVal, intVal, floatVal in args:
         if (fId, fName, fVersion, fValue) not in features.keys():
-            feature[(fId, fName, fVersion, fValue)] = set([])
+            features[(fId, fName, fVersion, fValue)] = set([])
         val = None
         dType = 0
+        val=None
         if strVal:
             val = strVal
         elif intVal:
@@ -63,7 +64,7 @@ def getCachedFeatures(folderNum, fileNum):
         elif floatVal:
             val = floatVal
             dType = 2
-        feature[(fId, fName, fVersion, fValue)].add((aName,val,dType))
+        features[(fId, fName, fVersion, fValue)].add((aName,val,dType))
     featList = []
     for feat, args in features.iteritems():
         item = ((feat[1],feat[2],args),feat[3])
