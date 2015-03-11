@@ -50,4 +50,4 @@ def refreshTable(name):
 
     closeConnection()
 
-#createTables()
+createTables()

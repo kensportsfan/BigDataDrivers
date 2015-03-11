@@ -39,7 +39,7 @@ def makeStuffHappen(folderCount=3,
         writer.writerow(["driver_trip","prob"])
         for folderNum in uggo[:folderCount]:
             print folderNum
-            datums = fi.importGroup(folderNum, feats)
+            datums = fi.importGroup("drivers/" + str(folderNum), feats)
             #for fileNum in xrange(1,len(datums)+1):
             #    print folderNum, fileNum, datums[fileNum-1]
             robust_cov = MinCovDet().fit(datums)

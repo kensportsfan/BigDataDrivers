@@ -3,7 +3,7 @@ import sqlInit
 
 #Only call once
 #Better protections to be implemented later
-def populateDrives(folderCount=25, fileCount=200):
+def populateDrives(folderCount=4000, fileCount=200):
     connection = sqlInit.getConnection()
     items = []
     for i in xrange(1,folderCount+1):
@@ -18,6 +18,7 @@ def populateDrives(folderCount=25, fileCount=200):
     #(name, value, type)
     #types: 0 = string, 1 = int, 2 = float
 def addFeature(name, version, value, folderNum, fileNum, args):
+    folderNum = folderNum[8:]
     connection = sqlInit.getConnection()
     stmt = '''INSERT INTO features (name, version, value, driverId)
                 VALUES (?,?,?,
@@ -38,6 +39,7 @@ def addFeature(name, version, value, folderNum, fileNum, args):
     connection.commit()
 
 def getCachedFeatures(folderNum, fileNum):
+    folderNum = folderNum[8:]
     connection = sqlInit.getConnection()
     c = connection.cursor()
     stmt = '''SELECT f.id, f.name, f.version, f.value, a.name, stringValue, intValue, floatValue
